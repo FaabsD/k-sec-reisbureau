@@ -12,7 +12,7 @@
     class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
     <div>
         <p>Kies een service</p>
-        <a href="getStedentrips.php">Stedentrips</a>
+        <a href="{{ route('stedentrips') }}">Stedentrips</a>
     </div>
 </div>
 </body>

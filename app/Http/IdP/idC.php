@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\IdP;
-use App\Http\JWT\JWT;
+use App\Http\JWT\jwt_helper;
 
-class idC extends JWT
+class idC extends jwt_helper
 {
     protected $bearerCredentials = "";
     protected $bearerToken = "";
@@ -16,7 +16,7 @@ class idC extends JWT
 
     public function decodeToken()
     {
-        $decoded = JWT::decode($this->bearerToken, 'secret_server_keys');
+        $decoded = jwt_helper::decode($this->bearerToken, 'secret_server_keys');
         if (($decoded->username ==
                 $this->bearerCredentials['username']) &&
             ($decoded->password ==

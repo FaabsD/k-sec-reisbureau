@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\getStedentripsApi;
+use App\Http\Controllers\getStedentrips;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +20,5 @@ Route::get('/', function () {
 });
 
 // API route
-Route::get('/getStedentripsAPI', [getStedentripsApi::class])->name('stedentripsAPI');
+Route::get('/getStedentripsAPI', getStedentripsApi::class)->name('stedentripsAPI');
+Route::get('/getStedentrips', [getStedentrips::class, 'index'])->name('stedentrips');

@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\IdP;
-use App\Http\JWT\JWT;
+use App\Http\JWT\jwt_helper;
 
-class IdP extends JWT
+class IdP extends jwt_helper
 {
     protected $bearerCredentials = "";
     protected $bearerToken = "";
@@ -12,7 +12,7 @@ class IdP extends JWT
         $this->bearerCredentials = $bearerCredentials;
     }
     public function getToken() {
-        $token = JWT::encode($this->bearerCredentials, "secret_server_keys");
+        $token = jwt_helper::encode($this->bearerCredentials, "secret_server_keys");
         return $token;
     }
 }

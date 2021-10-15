@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\IdP\IdP;
 
 class getStedentrips extends Controller
 {
@@ -19,7 +20,7 @@ class getStedentrips extends Controller
 
         $token = $idp->getToken();
 
-        $APIurl = "http://reisbueau.test/IdP/microservices/getStedentripsApi.php";
+        $APIurl = route('stedentripsAPI');
 
         // creëer url resource
         $ch = curl_init($APIurl);

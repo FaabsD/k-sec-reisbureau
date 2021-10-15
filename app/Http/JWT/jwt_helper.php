@@ -15,7 +15,7 @@ namespace App\Http\JWT;
  * @license  http://opensource.org/licenses/BSD-3-Clause 3-clause BSD
  * @link     https://github.com/firebase/php-jwt
  */
-class JWT
+class jwt_helper
 {
     /**
      * Decodes a JWT string into a PHP object.
@@ -38,18 +38,18 @@ class JWT
             throw new UnexpectedValueException('Wrong number of segments');
         }
         list($headb64, $bodyb64, $cryptob64) = $tks;
-        if (null === ($header = JWT::jsonDecode(JWT::urlsafeB64Decode($headb64)))) {
+        if (null === ($header = jwt_helper::jsonDecode(jwt_helper::urlsafeB64Decode($headb64)))) {
             throw new UnexpectedValueException('Invalid segment encoding');
         }
-        if (null === $payload = JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64))) {
+        if (null === $payload = jwt_helper::jsonDecode(jwt_helper::urlsafeB64Decode($bodyb64))) {
             throw new UnexpectedValueException('Invalid segment encoding');
         }
-        $sig = JWT::urlsafeB64Decode($cryptob64);
+        $sig = jwt_helper::urlsafeB64Decode($cryptob64);
         if ($verify) {
             if (empty($header->alg)) {
                 throw new DomainException('Empty algorithm');
             }
-            if ($sig != JWT::sign("$headb64.$bodyb64", $key, $header->alg)) {
+            if ($sig != jwt_helper::sign("$headb64.$bodyb64", $key, $header->alg)) {
                 throw new UnexpectedValueException('Signature verification failed');
             }
         }
@@ -73,12 +73,12 @@ class JWT
         $header = array('typ' => 'JWT', 'alg' => $algo);
 
         $segments = array();
-        $segments[] = JWT::urlsafeB64Encode(JWT::jsonEncode($header));
-        $segments[] = JWT::urlsafeB64Encode(JWT::jsonEncode($payload));
+        $segments[] = jwt_helper::urlsafeB64Encode(jwt_helper::jsonEncode($header));
+        $segments[] = jwt_helper::urlsafeB64Encode(jwt_helper::jsonEncode($payload));
         $signing_input = implode('.', $segments);
 
-        $signature = JWT::sign($signing_input, $key, $algo);
-        $segments[] = JWT::urlsafeB64Encode($signature);
+        $signature = jwt_helper::sign($signing_input, $key, $algo);
+        $segments[] = jwt_helper::urlsafeB64Encode($signature);
 
         return implode('.', $segments);
     }
@@ -119,7 +119,7 @@ class JWT
     {
         $obj = json_decode($input);
         if (function_exists('json_last_error') && $errno = json_last_error()) {
-            JWT::_handleJsonError($errno);
+            jwt_helper::_handleJsonError($errno);
         } else if ($obj === null && $input !== 'null') {
             throw new DomainException('Null result with non-null input');
         }
@@ -138,7 +138,7 @@ class JWT
     {
         $json = json_encode($input);
         if (function_exists('json_last_error') && $errno = json_last_error()) {
-            JWT::_handleJsonError($errno);
+            jwt_helper::_handleJsonError($errno);
         } else if ($json === 'null' && $input !== null) {
             throw new DomainException('Null result with non-null input');
         }
