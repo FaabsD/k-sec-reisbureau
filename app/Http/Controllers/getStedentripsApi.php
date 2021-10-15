@@ -26,8 +26,10 @@ class getStedentripsApi extends Controller
     public function checkToken()
     {
 
-        $username = htmlspecialchars($_POST['username']);
-        $password = htmlspecialchars($_POST['password']);
+//        $username = htmlspecialchars($_POST['username']);
+        $username = htmlspecialchars(request()->input('username'));
+//        $password = htmlspecialchars($_POST['password']);
+        $password = htmlspecialchars(request()->input('password'));
 
         $allHeaders = getallheaders();
         $authorization = $allHeaders['Authorization'];
@@ -68,7 +70,7 @@ class getStedentripsApi extends Controller
         header("Content-Type:application/json;charset=UTF-8");
         header("X-Content-Type-Options: nosniff");
         header("Cache-Control: max-age=100");
-        echo json_encode($this->returnData);
+        return json_encode($this->returnData);
         exit;
     }
 
