@@ -70,7 +70,7 @@ class getStedentripsApi extends Controller
         header("Content-Type:application/json;charset=UTF-8");
         header("X-Content-Type-Options: nosniff");
         header("Cache-Control: max-age=100");
-        return json_encode($this->returnData);
+        echo json_encode($this->returnData);
         exit;
     }
 

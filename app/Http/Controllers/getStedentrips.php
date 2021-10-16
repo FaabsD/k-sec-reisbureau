@@ -47,7 +47,7 @@ class getStedentrips extends Controller
         $response = curl_exec($ch);
 
         $resultStatus = curl_getinfo($ch);
-
+//        dd($response);
         // decodeer de response in arrayvorm
         $decoded = json_decode($response, true);
 
