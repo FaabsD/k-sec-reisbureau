@@ -20,5 +20,10 @@ Route::get('/', function () {
 });
 
 // API route
-Route::post('/getStedentripsAPI', getStedentripsApi::class)->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->name('stedentripsAPI');
+Route::prefix('api')->group(function () {
+    Route::post('/getStedentripsAPI', getStedentripsApi::class)
+        ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])
+        ->name('stedentripsAPI');
+});
+
 Route::get('/getStedentrips', [getStedentrips::class, 'index'])->name('stedentrips');
