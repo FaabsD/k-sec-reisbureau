@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\hotel;
 use Illuminate\Http\Request;
 use App\Http\IdP\idC;
 
@@ -18,6 +19,7 @@ class getStedentripsApi extends Controller
     protected $bearerCredentials = "";
     protected $returnData = "";
     protected $geverifieerd = "";
+    protected $hotelData = null;
 
     public function __contruct()
     {
@@ -45,9 +47,15 @@ class getStedentripsApi extends Controller
         return $idc->decodeToken();
     }
 
+    private function getHotelData()
+    {
+        return hotel::first();
+    }
+
     public function getService()
     {
         $this->geverifieerd = $this->checkToken();
+
 
         if (!$this->geverifieerd) {
             $this->returnData = array(
@@ -56,11 +64,13 @@ class getStedentripsApi extends Controller
                 "bearerToken" => $this->bearerToken,
             );
         } else {
-//            include 'includes/connection.php';
+            $this->hotelData = $this->getHotelData();
             $this->returnData = array(
                 "message" => "API Get Service uitgevoerd.",
                 "status" => '200',
                 "bearerToken" => $this->bearerToken,
+                "hotel" => $this->hotelData->name,
+                "hotelRooms" => $this->hotelData->rooms
 
             );
         }
