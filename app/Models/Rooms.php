@@ -11,6 +11,6 @@ class Rooms extends Model
     public $timestamps = false;
 
     public function hotels() {
-        return $this->belongsToMany(hotel::class, 'hotel_rooms');
+        return $this->belongsToMany(hotel::class, 'hotel_rooms', 'hotel_id', 'room_id');
     }
 }
