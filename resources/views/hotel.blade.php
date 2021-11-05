@@ -1,8 +1,8 @@
-@extends('layouts.main')
+<x-app-layout>
 @section('page_title')
     Hotel inter
 @endsection
-@section('header')
+<x-slot name="header">
     <header class="w-full">
         <div>
             <h2 class="text-2xl">
@@ -11,9 +11,8 @@
         </div>
 
     </header>
-@endsection
-
-@section('content')
+</x-slot>
+<x-slot name="slot">
     <div class="grid grid-cols-3 gap-x-4 container mx-auto">
         @foreach( $data['hotelRooms'] as $room )
             <div class="px-4 py-2 rounded bg-gray-100">
@@ -28,4 +27,5 @@
             </div>
         @endforeach
     </div>
-@endsection
+</x-slot>
+</x-app-layout>
