@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\hotel;
 use Illuminate\Http\Request;
 use App\Http\IdP\idC;
+use Illuminate\Support\Facades\Gate;
 
 class getStedentripsApi extends Controller
 {
@@ -21,13 +22,12 @@ class getStedentripsApi extends Controller
     protected $geverifieerd = "";
     protected $hotelData = null;
 
-    public function __contruct()
+    public function __construct()
     {
     }
 
     public function checkToken()
     {
-
 //        $username = htmlspecialchars($_POST['username']);
         $username = htmlspecialchars(request()->input('username'));
 //        $password = htmlspecialchars($_POST['password']);
