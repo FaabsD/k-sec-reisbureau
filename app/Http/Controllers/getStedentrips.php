@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\IdP\IdP;
+use Illuminate\Support\Facades\Gate;
 
 class getStedentrips extends Controller
 {
     public function index()
     {
-        $username = "reisbureau ZIP";
-        $password = "123";
+        $response = Gate::inspect('has-API-access');
+        if ($response->denied()) {
+            return response($response->message(), '403');
+        }
+
+        $username = auth()->user()->name;
+        $password = auth()->user()->password;
         $credentials = array();
         $credentials['username'] = $username;
         $credentials['password'] = $password;

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\hotel;
 use Illuminate\Http\Request;
 use App\Http\IdP\idC;
-use Illuminate\Support\Facades\Gate;
 
 class getStedentripsApi extends Controller
 {
