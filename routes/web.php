@@ -27,3 +27,7 @@ Route::prefix('api')->group(function () {
 });
 
 Route::get('/getStedentrips', [getStedentrips::class, 'index'])->name('stedentrips');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');

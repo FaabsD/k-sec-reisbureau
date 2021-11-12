@@ -21,13 +21,12 @@ class getStedentripsApi extends Controller
     protected $geverifieerd = "";
     protected $hotelData = null;
 
-    public function __contruct()
+    public function __construct()
     {
     }
 
     public function checkToken()
     {
-
 //        $username = htmlspecialchars($_POST['username']);
         $username = htmlspecialchars(request()->input('username'));
 //        $password = htmlspecialchars($_POST['password']);
