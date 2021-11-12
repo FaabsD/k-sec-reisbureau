@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('has-API-access', function (User $user) {
-            return isset($user->API_token)
+            return isset($user->API_key)
                 ? Response::allow()
                 : Response::deny('You dont have an API token');
         });

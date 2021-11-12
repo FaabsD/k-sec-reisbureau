@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\IdP\IdP;
 use Illuminate\Support\Facades\Gate;
@@ -10,7 +11,7 @@ class getStedentrips extends Controller
 {
     public function index()
     {
-        $response = Gate::inspect('has-API-access');
+        $response = Gate::inspect('has-API-access', auth()->user());
         if ($response->denied()) {
             return response($response->message(), '403');
         }
