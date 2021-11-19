@@ -2,8 +2,12 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\ApiKey;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
@@ -29,11 +33,21 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->updateProfilePhoto($input['photo']);
         }
 
-        if (isset($input['api_key'])) {
-            $api_key = 'xgfgfxhcfxgh';
-        } else {
-            $api_key = null;
+        if (isset($input['api_key']) && !$user->api_key) {
+            Log::debug('generate API key');
+            $key = Str::random(16);
+
+            $ApiKey = new ApiKey([
+                'API_key' => $key,
+            ]);
+            $user->api_key()->save($ApiKey);
+        } elseif (!isset($input['api_key'])) {
+            Log::debug('delete API key');
+            $user->api_key()->delete();
+
         }
+
+        Log::debug(print_r(request()->all(), true));
 
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
@@ -42,7 +56,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
-                'api_key' => $api_key,
             ])->save();
         }
     }

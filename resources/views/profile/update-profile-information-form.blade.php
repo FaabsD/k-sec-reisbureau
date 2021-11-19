@@ -69,7 +69,7 @@
         <!-- API-token -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="api_key" value="{{ __('API_key') }}"/>
-            <x-jet-input id="api_key" type="checkbox" class="mt-1 block" wire:model.defer="state.api_key"/>
+            <input id="api_key" name="api_key" type="checkbox" class="mt-1 block" value="yes" {{ $this->user->API_key ? 'checked' : '' }}/>
             <x-jet-input-error for="api_key" class="mt-2"/>
         </div>
     </x-slot>
