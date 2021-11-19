@@ -58,4 +58,8 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function api_key() {
+        return $this->hasOne(ApiKey::class, 'user_id', 'id');
+    }
 }
