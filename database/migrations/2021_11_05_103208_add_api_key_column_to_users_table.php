@@ -14,7 +14,7 @@ class AddApiKeyColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('API_key', 100)
+            $table->unsignedBigInteger('api_key_id', false)
                 ->after('remember_token')
                 ->nullable();
         });
