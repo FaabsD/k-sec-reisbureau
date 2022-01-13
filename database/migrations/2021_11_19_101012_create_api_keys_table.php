@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddApiKeyColumnToUsersTable extends Migration
+class CreateApiKeysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddApiKeyColumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::create('api_keys', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id', false)
+                ->nullable();
             $table->string('API_key', 100)
-                ->after('remember_token')
                 ->nullable();
         });
     }
@@ -27,8 +29,6 @@ class AddApiKeyColumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('API_key');
-        });
+        Schema::dropIfExists('api_keys');
     }
 }

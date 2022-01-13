@@ -2,8 +2,12 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\ApiKey;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
@@ -22,6 +26,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'api_key' => ['nullable'],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {

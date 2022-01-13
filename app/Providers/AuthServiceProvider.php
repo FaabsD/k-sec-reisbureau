@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,7 +29,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('has-API-access', function (User $user) {
-            return isset($user->API_key)
+            Log::debug($user->tokenCan('update'));
+            return $user->tokenCan('update')
                 ? Response::allow()
                 : Response::deny('You dont have an API token');
         });
