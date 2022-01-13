@@ -33,22 +33,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->updateProfilePhoto($input['photo']);
         }
 
-        if (isset($input['api_key']) && !$user->api_key) {
-            Log::debug('generate API key');
-            $key = Str::random(16);
-
-            $ApiKey = new ApiKey([
-                'API_key' => $key,
-            ]);
-            $user->api_key()->save($ApiKey);
-        } elseif (!isset($input['api_key'])) {
-            Log::debug('delete API key');
-            $user->api_key()->delete();
-
-        }
-
-        Log::debug(print_r(request()->all(), true));
-
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
